@@ -20,6 +20,7 @@ class Profile(models.Model):
 
 class Staff(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='staff_owner')
     staff_name = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -31,12 +32,10 @@ class Staff(models.Model):
 
 class Shift(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='shift_owner')
     shift_date = models.DateField()
     shift_start = models.TimeField()
     shift_end = models.TimeField()
-    staff_name = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.shift_date,shift_start,shift_end,staff_name
