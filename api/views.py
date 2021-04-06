@@ -48,6 +48,10 @@ class StaffViewSet(viewsets.ModelViewSet):
     queryset = Staff.objects.all()
     serializer_class = StaffSerializer
     permission_classes = (permissions.IsAuthenticated, custompermissions.OwnerPermission,)
+    filter_fields = ('is_active',)
+
+    def get_queryset(self):
+        return super().get_queryset().filter(owner=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -61,6 +65,9 @@ class ShiftViewSet(viewsets.ModelViewSet):
     queryset = Shift.objects.all()
     serializer_class = ShiftSerializer
     permission_classes = (permissions.IsAuthenticated, custompermissions.OwnerPermission,)
+
+    def get_queryset(self):
+        return super().get_queryset().filter(owner=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
