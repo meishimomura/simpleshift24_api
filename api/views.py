@@ -48,6 +48,7 @@ class StaffViewSet(viewsets.ModelViewSet):
     queryset = Staff.objects.all()
     serializer_class = StaffSerializer
     permission_classes = (permissions.IsAuthenticated, custompermissions.OwnerPermission,)
+    filter_fields = ('is_active',)
 
     def get_queryset(self):
         return super().get_queryset().filter(owner=self.request.user)
