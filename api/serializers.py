@@ -31,9 +31,9 @@ class StaffSerializer(serializers.ModelSerializer):
 
 
 class ShiftSerializer(serializers.ModelSerializer):
-    shift_date = serializers.DateField(format="%Y-%m-%d", read_only=True, input_formats=["%Y-%m-%d"])
-    shift_start = serializers.TimeField(format="%H:%M", read_only=True, input_formats=["%H:%M"])
-    shift_end = serializers.TimeField(format="%H:%M", read_only=True, input_formats=["%H:%M"])
+    shift_date = serializers.DateField(format="%Y-%m-%d", input_formats=["%Y-%m-%d"])
+    shift_start = serializers.TimeField(format="%H:%M", input_formats=["%H:%M"])
+    shift_end = serializers.TimeField(format="%H:%M", input_formats=["%H:%M"])
     staff_name = serializers.ReadOnlyField(source='staff.staff_name', read_only=True)
     staff_is_active = serializers.ReadOnlyField(source='staff.is_active', read_only=True)
     created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)
