@@ -40,5 +40,5 @@ class ShiftSerializer(serializers.ModelSerializer):
     updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)
     class Meta:
         model = Shift
-        fields = ['id', 'owner', 'shift_date', 'shift_start', 'shift_end', 'staff', 'staff_name', 'staff_is_active', 'created_at', 'updated_at']
+        fields = ['id', 'owner', 'shift_date', 'shift_start', 'shift_end', 'staff', 'staff_name', 'staff_is_active','lane','created_at', 'updated_at']
         extra_kwargs = {'owner': {'read_only': True}}

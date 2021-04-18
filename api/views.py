@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from .models import Profile, Staff, Shift
 from django.contrib.auth.models import User
 from . import custompermissions
-
+from django_filters import rest_framework as filters
 
 class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
@@ -60,11 +60,18 @@ class StaffViewSet(viewsets.ModelViewSet):
         response = {'message': 'DELETE method is not allowed'}
         return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
+class CustomShitDateFilter(filters.FilterSet):
+    shift_date = filters.DateFromToRangeFilter()
+
+    class Meta:
+        model = Shift
+        fields = ['shift_date']
 
 class ShiftViewSet(viewsets.ModelViewSet):
     queryset = Shift.objects.all()
     serializer_class = ShiftSerializer
     permission_classes = (permissions.IsAuthenticated, custompermissions.OwnerPermission,)
+    filter_class = CustomShitDateFilter
 
     def get_queryset(self):
         return super().get_queryset().filter(owner=self.request.user)
