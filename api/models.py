@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator
+from django.core.validators import MaxValueValidator
 import uuid
 
 def upload_avatar_path(instance, filename):
@@ -37,5 +39,6 @@ class Shift(models.Model):
     shift_start = models.TimeField()
     shift_end = models.TimeField()
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    lane = models.IntegerField(default=1,validators=[MinValueValidator(1),MaxValueValidator(5)])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
